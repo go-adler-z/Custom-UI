@@ -1,0 +1,169 @@
+<div class="login-page">
+
+  <!-- Perspective grid floor -->
+  <div class="grid-floor" aria-hidden="true">
+    <div class="grid-floor__lines"></div>
+    <div class="grid-floor__fade"></div>
+  </div>
+
+  <!-- Floating orbs -->
+  <div class="orb orb--1" aria-hidden="true"></div>
+  <div class="orb orb--2" aria-hidden="true"></div>
+
+  <!-- Wordmark overhead -->
+  <div class="login-wordmark">
+    <div class="login-wordmark__mark">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    </div>
+    <span class="login-wordmark__name">ZuperPro <span class="login-wordmark__accent">UI Builder</span></span>
+  </div>
+
+  <!-- Terminal card -->
+  <div class="terminal-card">
+
+    <!-- Terminal top bar -->
+    <div class="terminal-bar">
+      <div class="terminal-bar__dots">
+        <span></span><span></span><span></span>
+      </div>
+      <span class="terminal-bar__title">auth.zuperpro.com</span>
+      <div class="terminal-bar__status">
+        @if (region && !regionError) {
+          <span class="terminal-bar__region">
+            <span class="terminal-bar__region-dot"></span>
+            {{ region }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <!-- Terminal body -->
+    <div class="terminal-body">
+
+      <!-- Greeting prompt -->
+      <div class="terminal-prompt terminal-prompt--greeting">
+        <span class="prompt-prefix">$</span>
+        <span class="prompt-text">zuper login <span class="prompt-cursor">▋</span></span>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" class="terminal-form" autocomplete="off">
+
+        <!-- Company field -->
+        <div class="terminal-field">
+          <label class="terminal-label">
+            <span class="label-index">01</span>
+            <span class="label-text">Company workspace</span>
+          </label>
+          <div class="terminal-input-row">
+            <span class="terminal-input-prefix">›</span>
+            <input
+              class="terminal-input"
+              type="text"
+              name="company"
+              [(ngModel)]="company"
+              (ngModelChange)="onCompanyChange($event)"
+              placeholder="your-company-name"
+              autocomplete="organization"
+              required
+              spellcheck="false"
+            />
+          </div>
+          @if (company) {
+            <div class="terminal-feedback">
+              @if (regionLoading) {
+                <span class="tfb tfb--loading">
+                  <span class="tfb__pulse"></span>
+                  resolving region…
+                </span>
+              } @else if (region && !regionError) {
+                <span class="tfb tfb--ok">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  {{ region }} — workspace found
+                </span>
+              } @else if (regionError) {
+                <span class="tfb tfb--error">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  {{ regionError }}
+                </span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Divider -->
+        <div class="terminal-divider">
+          <span>credentials</span>
+        </div>
+
+        <!-- Email field -->
+        <div class="terminal-field">
+          <label class="terminal-label">
+            <span class="label-index">02</span>
+            <span class="label-text">Email address</span>
+          </label>
+          <div class="terminal-input-row">
+            <span class="terminal-input-prefix">›</span>
+            <input
+              class="terminal-input"
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="you@company.com"
+              autocomplete="email"
+              required
+              spellcheck="false"
+            />
+          </div>
+        </div>
+
+        <!-- Password field -->
+        <div class="terminal-field">
+          <label class="terminal-label">
+            <span class="label-index">03</span>
+            <span class="label-text">Password</span>
+          </label>
+          <div class="terminal-input-row">
+            <span class="terminal-input-prefix">›</span>
+            <input
+              class="terminal-input terminal-input--password"
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="••••••••••••"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Error -->
+        @if (!loginLoading && loginError) {
+          <div class="terminal-error">
+            <span class="terminal-error__prefix">ERROR</span>
+            {{ loginError }}
+          </div>
+        }
+
+        <!-- Submit -->
+        <button class="terminal-submit" type="submit" [disabled]="loginLoading">
+          @if (loginLoading) {
+            <span class="terminal-submit__spinner"></span>
+            <span>authenticating…</span>
+          } @else {
+            <span>$ authenticate</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          }
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- Card footer -->
+    <div class="terminal-footer">
+      <span class="terminal-footer__text">48 features · 12 page types · 1-click deploy</span>
+    </div>
+
+  </div>
+
+</div>

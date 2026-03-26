@@ -1,0 +1,303 @@
+<div class="ide-shell">
+
+  <!-- ── BODY ────────────────────────────────────────────────────────────── -->
+  <div class="ide-body">
+
+    <!-- ── ICON RAIL ─────────────────────────────────────────────────────── -->
+    <div class="ide-rail">
+      <div class="ide-rail__top">
+        <button class="rail-btn rail-btn--active" title="Feature tree">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        @if (selectedCount > 0) {
+          <div class="rail-divider"></div>
+          <button class="rail-btn" title="{{ selectedCount }} selected">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <span class="rail-badge">{{ selectedCount }}</span>
+          </button>
+        }
+      </div>
+      <div class="ide-rail__bottom">
+        <button class="rail-btn" title="Home" routerLink="/">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── SIDEBAR: Feature tree ─────────────────────────────────────────── -->
+    <aside class="ide-sidebar">
+
+      <div class="ide-sidebar__header">
+        <span class="ide-sidebar__title">Features</span>
+        <div class="ide-sidebar__meta">
+          @if (searchQuery) {
+            <span class="ide-sidebar__count ide-sidebar__count--filtered">{{ filteredCount }}/{{ allFeatures.length }}</span>
+          } @else {
+            <span class="ide-sidebar__count">{{ allFeatures.length }}</span>
+          }
+          @if (selectedCount > 0) {
+            <button class="ide-clear-btn" (click)="clearAll()">Clear</button>
+          }
+        </div>
+      </div>
+
+      <div class="ide-search">
+        <svg class="ide-search__icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input
+          class="ide-search__input"
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Search features, pages…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        @if (searchQuery) {
+          <button class="ide-search__clear" (click)="searchQuery = ''">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        }
+      </div>
+
+      <div class="ide-tree">
+        @for (group of filteredGroups; track trackByPage($index, group)) {
+          <div class="ift-group">
+            <div class="ift-group__header">
+              <span class="ift-group__label">{{ group.label }}</span>
+              <span class="ift-group__count">{{ group.features.length }}</span>
+            </div>
+            @for (feature of group.features; track trackById($index, feature); let idx = $index) {
+              <div
+                class="ift-item"
+                [class.ift-item--on]="isSelected(feature.id)"
+                [style.--i]="idx"
+                (click)="toggleFeature(feature)"
+              >
+                <div class="ift-item__check" [class.on]="isSelected(feature.id)">
+                  @if (isSelected(feature.id)) {
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  }
+                </div>
+                <div class="ift-item__body">
+                  <span class="ift-item__id">{{ feature.id }}</span>
+                  <span class="ift-item__name">{{ feature.label }}</span>
+                </div>
+                @if (feature.pages.length > 0) {
+                  <span class="ift-item__page">{{ feature.pages[0] }}</span>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        @if (filteredGroups.length === 0) {
+          <div class="ift-empty">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <p>No results for<br><strong>"{{ searchQuery }}"</strong></p>
+          </div>
+        }
+      </div>
+
+    </aside>
+
+    <!-- ── MAIN: always-split panes ──────────────────────────────────────── -->
+    <div class="ide-main">
+
+      @if (selectedCount === 0) {
+        <div class="ide-empty">
+          <div class="ide-empty__grid" aria-hidden="true"></div>
+          <div class="ide-empty__ring ide-empty__ring--1"></div>
+          <div class="ide-empty__ring ide-empty__ring--2"></div>
+          <div class="ide-empty__content">
+            <div class="ide-empty__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <h3 class="ide-empty__heading">Select features to begin</h3>
+            <p class="ide-empty__sub">Pick from <strong>{{ allFeatures.length }} features</strong> in the tree.<br>Configure · Generate · Deploy.</p>
+            <div class="ide-empty__steps">
+              <div class="ide-step"><span class="ide-step__n">01</span><span>Pick features</span></div>
+              <div class="ide-step__line"></div>
+              <div class="ide-step"><span class="ide-step__n">02</span><span>Configure</span></div>
+              <div class="ide-step__line"></div>
+              <div class="ide-step"><span class="ide-step__n">03</span><span>Deploy</span></div>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (selectedCount > 0) {
+
+        <!-- Configure pane -->
+        <div class="ide-pane ide-pane--configure">
+          <div class="ide-pane__bar">
+            <div class="ide-pane__bar-left">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+              <span class="ide-pane__name">Configure</span>
+              <span class="ide-pane__badge">{{ selectedCount }}</span>
+            </div>
+          </div>
+          <div class="ide-pane__body">
+            <mat-accordion multi>
+              @for (sf of selectedFeatures; track sf.feature.id; let i = $index) {
+                <mat-expansion-panel class="ide-ep" [style.--pi]="i">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <span class="ide-ep__id">{{ sf.feature.id }}</span>
+                      <span class="ide-ep__name">{{ sf.feature.label }}</span>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      @if (sf.feature.requiredConfig.length === 0) {
+                        <span class="ide-badge ide-badge--ok">ready</span>
+                      } @else {
+                        <span class="ide-badge ide-badge--fields">{{ sf.feature.requiredConfig.length }} fields</span>
+                      }
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <div class="ide-ep__body">
+                    <p class="ide-ep__desc">{{ sf.feature.description }}</p>
+
+                    @if (sf.feature.pages.length > 0) {
+                      <div class="ide-ep__pages">
+                        @for (page of sf.feature.pages; track page) {
+                          <span class="ide-page-chip">{{ page }}</span>
+                        }
+                      </div>
+                    }
+
+                    @if (sf.feature.requiredConfig.length === 0) {
+                      <div class="ide-no-config">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        No configuration required
+                      </div>
+                    }
+
+                    @for (field of sf.feature.requiredConfig; track trackByKey($index, field)) {
+                      <div class="ide-field">
+                        <label class="ide-field__label">
+                          {{ field.label }}
+                          @if (field.type === 'url') { <span class="ide-field__type">URL</span> }
+                        </label>
+                        @if (field.hint) { <p class="ide-field__hint">{{ field.hint }}</p> }
+                        @if (field.type === 'textarea') {
+                          <textarea
+                            class="ide-input ide-input--ta"
+                            rows="3"
+                            [placeholder]="field.placeholder || ''"
+                            [value]="getConfigValue(sf.feature.id, field.key)"
+                            (input)="updateConfig(sf.feature.id, field.key, $any($event.target).value)"
+                          ></textarea>
+                        } @else {
+                          <div class="ide-input-wrap">
+                            @if (field.type === 'url') {
+                              <svg class="ide-input-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                            }
+                            <input
+                              class="ide-input"
+                              [class.ide-input--icon]="field.type === 'url'"
+                              [type]="field.type === 'url' ? 'url' : 'text'"
+                              [placeholder]="field.placeholder || field.default || ''"
+                              [value]="getConfigValue(sf.feature.id, field.key)"
+                              (input)="updateConfig(sf.feature.id, field.key, $any($event.target).value)"
+                            />
+                          </div>
+                        }
+                      </div>
+                    }
+
+                    <button class="ide-remove-btn" (click)="toggleFeature(sf.feature)">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                      Remove
+                    </button>
+                  </div>
+                </mat-expansion-panel>
+              }
+            </mat-accordion>
+          </div>
+        </div>
+
+        <!-- Pane divider -->
+        <div class="ide-split-line"></div>
+
+        <!-- Output pane -->
+        <div class="ide-pane ide-pane--output">
+          <div class="ide-pane__bar">
+            <div class="ide-pane__bar-left">
+              <div class="ide-pane__dots"><span></span><span></span><span></span></div>
+              <span class="ide-pane__filename">index.js</span>
+              <span class="ide-pane__meta">{{ generatedCode.length | number }} chars · {{ selectedCount }} feature{{ selectedCount > 1 ? 's' : '' }}</span>
+            </div>
+            <div class="ide-pane__bar-right">
+              <span class="ide-builder-tag">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                UI Builder
+              </span>
+              <button
+                class="ide-action-btn"
+                [class.ide-action-btn--done]="copyLabel === 'Copied!'"
+                (click)="copyCode()"
+              >
+                @if (copyLabel === 'Copied!') {
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                } @else {
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                }
+                {{ copyLabel }}
+              </button>
+              <button class="ide-action-btn" (click)="downloadJs()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
+              </button>
+              <button
+                class="ide-action-btn ide-action-btn--deploy"
+                [class.ide-action-btn--deploying]="deployLabel === 'Deploying…'"
+                [class.ide-action-btn--deployed]="deployLabel === 'Deployed!'"
+                [class.ide-action-btn--failed]="deployLabel === 'Failed'"
+                [disabled]="deployLabel === 'Deploying…'"
+                (click)="deployToApi()"
+              >
+                @if (deployLabel === 'Deploying…') {
+                  <span class="ide-spinner"></span>
+                } @else if (deployLabel === 'Deployed!') {
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                } @else if (deployLabel === 'Failed') {
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                } @else if (editingUid) {
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 11 16 11"/><polyline points="1 20 1 13 8 13"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 11M1 13l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                } @else {
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                }
+                {{ deployLabel === 'Deploy' ? (editingUid ? 'Update' : 'Deploy') : deployLabel }}
+              </button>
+            </div>
+          </div>
+          <pre class="ide-code" [innerHTML]="generatedCode | syntaxHighlight"></pre>
+        </div>
+
+      }
+    </div>
+
+  </div>
+
+  <!-- ── STATUS BAR ────────────────────────────────────────────────────── -->
+  <div class="ide-statusbar">
+    <div class="ide-statusbar__left">
+      <span class="ide-sb-item">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        {{ selectedCount }} selected
+      </span>
+      @if (editingUid) {
+        <span class="ide-sb-item ide-sb-item--edit">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Editing {{ editingUid.slice(0, 8) }}…
+        </span>
+      }
+    </div>
+    <div class="ide-statusbar__right">
+      <span class="ide-sb-item">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        ZuperPro UI Builder
+      </span>
+    </div>
+  </div>
+
+</div>

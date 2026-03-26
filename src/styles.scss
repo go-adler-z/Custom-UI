@@ -1,1 +1,168 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+// ─── Design Tokens ────────────────────────────────────────────────────────────
+
+:root {
+  // Backgrounds
+  --bg:       #06070f;
+  --surf:     #0b0d1a;
+  --surf2:    #0e1020;
+  --surf3:    #131627;
+  --surf4:    #181c2e;
+
+  // Borders
+  --bdr:      #1c2038;
+  --bdr2:     #232740;
+  --bdr3:     #2d334f;
+
+  // Text
+  --t1:       #eef0ff;
+  --t2:       #8b92b8;
+  --t3:       #4a5175;
+  --t4:       #2d3354;
+
+  // Cyan — primary accent
+  --cyan:     #00d9ff;
+  --cyan-d:   rgba(0, 217, 255, 0.08);
+  --cyan-g:   rgba(0, 217, 255, 0.15);
+  --cyan-b:   rgba(0, 217, 255, 0.25);
+
+  // Violet — secondary accent
+  --violet:   #a78bfa;
+  --violet-d: rgba(167, 139, 250, 0.08);
+  --violet-g: rgba(167, 139, 250, 0.15);
+
+  // Emerald — success / active
+  --emerald:  #34d399;
+  --emerald-d:rgba(52, 211, 153, 0.08);
+
+  // Rose — danger / error
+  --rose:     #f43f5e;
+  --rose-d:   rgba(244, 63, 94, 0.08);
+  --rose-g:   rgba(244, 63, 94, 0.15);
+
+  // Amber — warning
+  --amber:    #fbbf24;
+  --amber-d:  rgba(251, 191, 36, 0.08);
+
+  // Typography
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+// ─── Reset ───────────────────────────────────────────────────────────────────
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--t1);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ─── Scrollbar ────────────────────────────────────────────────────────────────
+
+::-webkit-scrollbar         { width: 4px; height: 4px; }
+::-webkit-scrollbar-track   { background: transparent; }
+::-webkit-scrollbar-thumb   { background: var(--bdr3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--t3); }
+
+// ─── Angular Material Overrides ───────────────────────────────────────────────
+
+.mat-mdc-form-field {
+  --mdc-filled-text-field-container-color:          var(--surf3);
+  --mdc-filled-text-field-focus-active-indicator-color: var(--cyan);
+  --mdc-filled-text-field-label-text-color:         var(--t3);
+  --mdc-filled-text-field-input-text-color:         var(--t1);
+  --mdc-filled-text-field-container-shape:          8px;
+  --mdc-outlined-text-field-outline-color:          var(--bdr2);
+  --mdc-outlined-text-field-focus-outline-color:    var(--cyan);
+  --mdc-outlined-text-field-label-text-color:       var(--t3);
+  --mdc-outlined-text-field-input-text-color:       var(--t1);
+  --mdc-outlined-text-field-container-shape:        8px;
+  font-family: var(--font-body);
+}
+
+.mat-mdc-checkbox {
+  --mdc-checkbox-unselected-icon-color:        var(--bdr3);
+  --mdc-checkbox-selected-icon-color:          var(--cyan);
+  --mdc-checkbox-selected-checkmark-color:     var(--bg);
+  --mdc-checkbox-selected-focus-icon-color:    var(--cyan);
+  --mdc-checkbox-selected-hover-icon-color:    #33e4ff;
+  --mdc-checkbox-unselected-hover-icon-color:  var(--t3);
+}
+
+.mat-expansion-panel {
+  background: var(--surf) !important;
+  color: var(--t1) !important;
+  box-shadow: none !important;
+  border: 1px solid var(--bdr) !important;
+  border-radius: 10px !important;
+}
+.mat-expansion-panel-header {
+  color: var(--t1) !important;
+  font-family: var(--font-body) !important;
+  border-radius: 10px !important;
+}
+.mat-expansion-panel-header:hover {
+  background: var(--surf2) !important;
+}
+.mat-expansion-panel.mat-expanded > .mat-expansion-panel-header {
+  border-bottom: 1px solid var(--bdr) !important;
+  border-radius: 10px 10px 0 0 !important;
+}
+.mat-expansion-indicator::after {
+  color: var(--t3) !important;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color:   var(--cyan);
+  --mdc-protected-button-label-text-color:  var(--bg);
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+.mat-mdc-outlined-button {
+  --mdc-outlined-button-outline-color:      var(--bdr2);
+  --mdc-outlined-button-label-text-color:   var(--t2);
+  font-family: var(--font-body);
+}
+.mat-mdc-outlined-button:hover {
+  --mdc-outlined-button-outline-color: var(--bdr3);
+}
+.mat-mdc-button {
+  --mdc-text-button-label-text-color: var(--t2);
+  font-family: var(--font-body);
+}
+.mat-mdc-button.mat-warn {
+  --mdc-text-button-label-text-color: var(--rose);
+}
+
+.mat-mdc-form-field-hint-wrapper,
+.mat-mdc-form-field-error-wrapper {
+  color: var(--t3) !important;
+  font-family: var(--font-body) !important;
+}
+
+input, textarea {
+  caret-color: var(--cyan);
+  font-family: var(--font-body);
+}
+
+// ─── Mat icon sizing helper ───────────────────────────────────────────────────
+
+.mat-icon { user-select: none; }
+
+// ─── Selection ────────────────────────────────────────────────────────────────
+
+::selection {
+  background: rgba(0, 217, 255, 0.18);
+  color: var(--t1);
+}

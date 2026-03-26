@@ -1,0 +1,158 @@
+<div class="atlas-shell">
+
+  <!-- ── STICKY SIDEBAR ────────────────────────────────────────────────── -->
+  <aside class="atlas-sidebar">
+
+    <div class="atlas-sidebar__brand">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Feature Atlas
+    </div>
+
+    <div class="atlas-search">
+      <svg class="atlas-search__icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input
+        class="atlas-search__input"
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Search…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      @if (searchQuery) {
+        <button class="atlas-search__clear" (click)="searchQuery = ''">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      }
+    </div>
+
+    <div class="atlas-section-label">Filter</div>
+
+    <div class="atlas-filters">
+      <button class="atlas-filter-btn" [class.active]="filterMode === 'all'" (click)="setFilter('all')">
+        <span>All features</span>
+        <span class="atlas-filter-btn__count">{{ allFeatures.length }}</span>
+      </button>
+      <button class="atlas-filter-btn" [class.active]="filterMode === 'zero-config'" (click)="setFilter('zero-config')">
+        <span class="atlas-filter-btn__dot atlas-filter-btn__dot--green"></span>
+        <span>Zero config</span>
+        <span class="atlas-filter-btn__count">{{ zeroConfigCount }}</span>
+      </button>
+      <button class="atlas-filter-btn" [class.active]="filterMode === 'needs-config'" (click)="setFilter('needs-config')">
+        <span class="atlas-filter-btn__dot atlas-filter-btn__dot--amber"></span>
+        <span>Needs config</span>
+        <span class="atlas-filter-btn__count">{{ allFeatures.length - zeroConfigCount }}</span>
+      </button>
+    </div>
+
+    <div class="atlas-section-label" style="margin-top: 20px;">Stats</div>
+
+    <div class="atlas-stats">
+      <div class="atlas-stat">
+        <span class="atlas-stat__num">{{ allFeatures.length }}</span>
+        <span class="atlas-stat__lbl">Features</span>
+      </div>
+      <div class="atlas-stat">
+        <span class="atlas-stat__num">{{ groupedFilteredFeatures.length }}</span>
+        <span class="atlas-stat__lbl">Page types</span>
+      </div>
+    </div>
+
+    <a class="atlas-cta" routerLink="/builder">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Open Builder
+    </a>
+
+  </aside>
+
+  <!-- ── MAIN CONTENT ───────────────────────────────────────────────────── -->
+  <main class="atlas-main">
+
+    <!-- Header -->
+    <div class="atlas-header">
+      <div class="atlas-header__eyebrow">SDK Feature Library</div>
+      <h1 class="atlas-header__h1">
+        <span class="atlas-header__num">{{ filteredFeatures.length }}</span>
+        features
+      </h1>
+      <p class="atlas-header__sub">
+        Every pre-built ZuperPro SDK extension, organized by page type.
+        Pick what you need in the <a routerLink="/builder">Builder →</a>
+      </p>
+    </div>
+
+    <!-- Grouped sections -->
+    @for (group of groupedFilteredFeatures; track group.page; let i = $index) {
+      <section class="atlas-group" [style.--gi]="i">
+
+        <div class="atlas-group__header">
+          <div class="atlas-group__icon">
+            <mat-icon>{{ group.icon }}</mat-icon>
+          </div>
+          <div class="atlas-group__meta">
+            <h2 class="atlas-group__title">{{ group.page }}</h2>
+            <span class="atlas-group__count">{{ group.features.length }} feature{{ group.features.length > 1 ? 's' : '' }}</span>
+          </div>
+          <div class="atlas-group__line"></div>
+        </div>
+
+        <div class="atlas-row">
+          @for (feature of group.features; track feature.id; let fi = $index) {
+            <div class="atlas-card" [style.--fi]="fi">
+
+              <div class="atlas-card__top">
+                <span class="atlas-card__id">{{ feature.id }}</span>
+                @if (feature.requiredConfig.length === 0) {
+                  <span class="atlas-card__badge atlas-card__badge--ready">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    Ready
+                  </span>
+                } @else {
+                  <span class="atlas-card__badge atlas-card__badge--cfg">
+                    {{ feature.requiredConfig.length }} fields
+                  </span>
+                }
+              </div>
+
+              <h3 class="atlas-card__title">{{ feature.label }}</h3>
+              <p class="atlas-card__desc">{{ feature.description }}</p>
+
+              @if (feature.pages.length > 1) {
+                <div class="atlas-card__pages">
+                  @for (page of feature.pages; track page) {
+                    <span class="atlas-card__page">{{ page }}</span>
+                  }
+                </div>
+              }
+
+              @if (feature.requiredConfig.length > 0) {
+                <div class="atlas-card__fields">
+                  @for (field of feature.requiredConfig; track field.key) {
+                    <span class="atlas-card__field">{{ field.label }}</span>
+                  }
+                </div>
+              }
+
+              <a class="atlas-card__cta" routerLink="/builder">
+                Use in Builder
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+
+            </div>
+          }
+        </div>
+
+      </section>
+    }
+
+    <!-- Empty state -->
+    @if (filteredFeatures.length === 0) {
+      <div class="atlas-empty">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <p>No features match <strong>"{{ searchQuery }}"</strong></p>
+        <button class="atlas-empty__reset" (click)="searchQuery = ''; filterMode = 'all'">Clear filters</button>
+      </div>
+    }
+
+  </main>
+
+</div>
