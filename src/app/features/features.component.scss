@@ -1,7 +1,16 @@
+:host {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 // ── Shell ─────────────────────────────────────────────────────────────────────
 .atlas-shell {
   display: flex;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
   background: var(--bg);
   font-family: var(--font-body);
@@ -50,7 +59,7 @@
   padding: 7px 10px;
   margin-bottom: 4px;
   transition: border-color .15s;
-  &:focus-within { border-color: rgba(0,217,255,.4); }
+  &:focus-within { border-color: var(--cyan); box-shadow: 0 0 0 2px var(--cyan-d); }
 
   &__icon { color: var(--t4); flex-shrink: 0; }
 
@@ -124,7 +133,7 @@
     border-radius: 50%;
     flex: 0 !important;
     flex-shrink: 0;
-    &--green { background: var(--emerald); box-shadow: 0 0 5px rgba(52,211,153,.4); }
+    &--green { background: var(--emerald); }
     &--amber { background: var(--amber); }
   }
 }
@@ -178,7 +187,7 @@
   text-decoration: none;
   transition: all .15s;
   margin-top: 8px;
-  &:hover { background: var(--cyan-d); border-color: rgba(0,217,255,.3); }
+  &:hover { background: var(--cyan-d); border-color: var(--cyan); }
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -345,8 +354,8 @@
     border-radius: 4px;
     flex-shrink: 0;
 
-    &--ready { background: var(--emerald-d); border: 1px solid rgba(52,211,153,.2); color: var(--emerald); }
-    &--cfg   { background: var(--amber-d); border: 1px solid rgba(251,191,36,.2); color: var(--amber); }
+    &--ready { background: var(--emerald-d); border: 1px solid var(--emerald); color: var(--emerald); }
+    &--cfg   { background: var(--amber-d); border: 1px solid var(--amber); color: var(--amber); }
   }
 
   &__title {
@@ -377,7 +386,7 @@
     font-size: .58rem;
     color: var(--violet);
     background: var(--violet-d);
-    border: 1px solid rgba(167,139,250,.15);
+    border: 1px solid var(--violet-g);
     border-radius: 3px;
     padding: 1px 5px;
   }

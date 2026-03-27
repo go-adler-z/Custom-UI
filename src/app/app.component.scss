@@ -5,30 +5,15 @@
   overflow: hidden;
 }
 
-// Nav floats over content — content gets padding-top to clear it
+// Nav is fixed at top — content gets padding-top to clear it
 .app-content {
   flex: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding-top: 72px; // clearance for floating nav
+  padding-top: var(--nav-h); // clearance for fixed nav
 
   .app-shell--no-nav & { padding-top: 0; }
 }
 
-app-ui-builder {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 0;
-}
-
-app-home,
-app-features {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-}

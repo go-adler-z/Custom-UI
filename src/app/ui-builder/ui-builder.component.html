@@ -81,10 +81,41 @@
                   <span class="ift-item__id">{{ feature.id }}</span>
                   <span class="ift-item__name">{{ feature.label }}</span>
                 </div>
+                <button class="ift-info-btn" [class.ift-info-btn--active]="activeInfoId === feature.id" (click)="toggleInfo(feature.id, $event)" title="Details">i</button>
                 @if (feature.pages.length > 0) {
                   <span class="ift-item__page">{{ feature.pages[0] }}</span>
                 }
               </div>
+              @if (activeInfoId === feature.id) {
+                <div class="ift-info-panel">
+                  <p class="ift-info-panel__desc">{{ feature.description }}</p>
+                  @if (feature.pages.length > 1) {
+                    <div class="ift-info-panel__row">
+                      <span class="ift-info-panel__label">Pages</span>
+                      <div class="ift-info-panel__tags">
+                        @for (page of feature.pages; track page) {
+                          <span class="ift-item__page">{{ page }}</span>
+                        }
+                      </div>
+                    </div>
+                  }
+                  @if (feature.requiredConfig.length > 0) {
+                    <div class="ift-info-panel__row">
+                      <span class="ift-info-panel__label">Config fields</span>
+                      <div class="ift-info-panel__fields">
+                        @for (field of feature.requiredConfig; track field.key) {
+                          <span class="ift-info-panel__field">{{ field.label }}</span>
+                        }
+                      </div>
+                    </div>
+                  } @else {
+                    <div class="ift-info-panel__ready">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                      No config required
+                    </div>
+                  }
+                </div>
+              }
             }
           </div>
         }

@@ -57,6 +57,7 @@ export class UiBuilderComponent implements OnInit {
   deployLabel: 'Deploy' | 'Deploying…' | 'Deployed!' | 'Failed' = 'Deploy';
   activeTab: 'configure' | 'output' = 'configure';
   editingUid: string | null = null;   // set when opened via "Edit" from home
+  activeInfoId: string | null = null;
 
   // ── Derived ─────────────────────────────────────────────────────────────────
   allFeatures = FEATURES;
@@ -225,6 +226,11 @@ export class UiBuilderComponent implements OnInit {
       this.copyLabel = 'Failed';
       setTimeout(() => (this.copyLabel = 'Copy'), 2000);
     }
+  }
+
+  toggleInfo(id: string, event: MouseEvent): void {
+    event.stopPropagation();
+    this.activeInfoId = this.activeInfoId === id ? null : id;
   }
 
   clearAll(): void {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,9 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './nav.component.scss',
 })
 export class NavComponent {
+  @Input() isDark = false;
+  @Output() toggleTheme = new EventEmitter<void>();
+
   constructor(private readonly router: Router) {}
 
   get isAuthed(): boolean {

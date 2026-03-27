@@ -1,54 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
-// ─── Design Tokens ────────────────────────────────────────────────────────────
+// ─── Design Tokens — Light (default) ─────────────────────────────────────────
 
 :root {
-  // Backgrounds
-  --bg:       #06070f;
-  --surf:     #0b0d1a;
-  --surf2:    #0e1020;
-  --surf3:    #131627;
-  --surf4:    #181c2e;
+  // Surfaces
+  --bg:       #F1F5F9;
+  --surf:     #FFFFFF;
+  --surf2:    #F8FAFC;
+  --surf3:    #F1F5F9;
+  --surf4:    #E2E8F0;
 
   // Borders
-  --bdr:      #1c2038;
-  --bdr2:     #232740;
-  --bdr3:     #2d334f;
+  --bdr:      #E2E8F0;
+  --bdr2:     #CBD5E1;
+  --bdr3:     #94A3B8;
 
   // Text
-  --t1:       #eef0ff;
-  --t2:       #8b92b8;
-  --t3:       #4a5175;
-  --t4:       #2d3354;
+  --t1:       #0F172A;
+  --t2:       #1E293B;
+  --t3:       #64748B;
+  --t4:       #94A3B8;
 
-  // Cyan — primary accent
-  --cyan:     #00d9ff;
-  --cyan-d:   rgba(0, 217, 255, 0.08);
-  --cyan-g:   rgba(0, 217, 255, 0.15);
-  --cyan-b:   rgba(0, 217, 255, 0.25);
+  // Primary — Indigo
+  --cyan:     #4F46E5;
+  --cyan-d:   rgba(79, 70, 229, 0.08);
+  --cyan-g:   rgba(79, 70, 229, 0.15);
+  --cyan-b:   rgba(79, 70, 229, 0.25);
 
-  // Violet — secondary accent
-  --violet:   #a78bfa;
-  --violet-d: rgba(167, 139, 250, 0.08);
-  --violet-g: rgba(167, 139, 250, 0.15);
+  // Secondary — Violet
+  --violet:   #7C3AED;
+  --violet-d: rgba(124, 58, 237, 0.08);
+  --violet-g: rgba(124, 58, 237, 0.15);
 
-  // Emerald — success / active
-  --emerald:  #34d399;
-  --emerald-d:rgba(52, 211, 153, 0.08);
-
-  // Rose — danger / error
-  --rose:     #f43f5e;
-  --rose-d:   rgba(244, 63, 94, 0.08);
-  --rose-g:   rgba(244, 63, 94, 0.15);
-
-  // Amber — warning
-  --amber:    #fbbf24;
-  --amber-d:  rgba(251, 191, 36, 0.08);
+  // Semantic
+  --emerald:   #059669;
+  --emerald-d: rgba(5, 150, 105, 0.10);
+  --rose:      #DC2626;
+  --rose-d:    rgba(220, 38, 38, 0.08);
+  --rose-g:    rgba(220, 38, 38, 0.15);
+  --amber:     #D97706;
+  --amber-d:   rgba(217, 119, 6, 0.10);
 
   // Typography
-  --font-display: 'Syne', system-ui, sans-serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
-  --font-mono:    'JetBrains Mono', monospace;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+
+  // Nav height
+  --nav-h: 64px;
+
+  // Elevation
+  --shadow-sm:  0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow:     0 1px 3px rgba(15, 23, 42, 0.10), 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md:  0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.06);
+  --shadow-lg:  0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+  --shadow-xl:  0 20px 25px -5px rgba(15, 23, 42, 0.10), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+}
+
+// ─── Design Tokens — Dark ─────────────────────────────────────────────────────
+
+body.dark {
+  --bg:       #0F172A;
+  --surf:     #1E293B;
+  --surf2:    #263044;
+  --surf3:    #1E293B;
+  --surf4:    #334155;
+
+  --bdr:      #1E293B;
+  --bdr2:     #334155;
+  --bdr3:     #475569;
+
+  --t1:       #F1F5F9;
+  --t2:       #CBD5E1;
+  --t3:       #94A3B8;
+  --t4:       #475569;
+
+  --cyan-d:   rgba(99, 102, 241, 0.15);
+  --cyan-g:   rgba(99, 102, 241, 0.25);
+  --cyan-b:   rgba(99, 102, 241, 0.35);
+  --violet-d: rgba(139, 92, 246, 0.15);
+  --violet-g: rgba(139, 92, 246, 0.25);
+
+  --emerald-d: rgba(16, 185, 129, 0.15);
+  --rose-d:    rgba(239, 68, 68, 0.12);
+  --rose-g:    rgba(239, 68, 68, 0.20);
+  --amber-d:   rgba(245, 158, 11, 0.12);
+
+  --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow:     0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md:  0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 2px 4px -1px rgba(0, 0, 0, 0.25);
+  --shadow-lg:  0 10px 15px -3px rgba(0, 0, 0, 0.40), 0 4px 6px -2px rgba(0, 0, 0, 0.30);
+  --shadow-xl:  0 20px 25px -5px rgba(0, 0, 0, 0.45), 0 10px 10px -5px rgba(0, 0, 0, 0.35);
 }
 
 // ─── Reset ───────────────────────────────────────────────────────────────────
@@ -66,44 +108,45 @@ html, body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background .2s, color .2s;
 }
 
 // ─── Scrollbar ────────────────────────────────────────────────────────────────
 
 ::-webkit-scrollbar         { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track   { background: transparent; }
-::-webkit-scrollbar-thumb   { background: var(--bdr3); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--t3); }
+::-webkit-scrollbar-thumb   { background: var(--bdr2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bdr3); }
 
 // ─── Angular Material Overrides ───────────────────────────────────────────────
 
 .mat-mdc-form-field {
-  --mdc-filled-text-field-container-color:          var(--surf3);
+  --mdc-filled-text-field-container-color:              var(--surf2);
   --mdc-filled-text-field-focus-active-indicator-color: var(--cyan);
-  --mdc-filled-text-field-label-text-color:         var(--t3);
-  --mdc-filled-text-field-input-text-color:         var(--t1);
-  --mdc-filled-text-field-container-shape:          8px;
-  --mdc-outlined-text-field-outline-color:          var(--bdr2);
-  --mdc-outlined-text-field-focus-outline-color:    var(--cyan);
-  --mdc-outlined-text-field-label-text-color:       var(--t3);
-  --mdc-outlined-text-field-input-text-color:       var(--t1);
-  --mdc-outlined-text-field-container-shape:        8px;
+  --mdc-filled-text-field-label-text-color:             var(--t3);
+  --mdc-filled-text-field-input-text-color:             var(--t1);
+  --mdc-filled-text-field-container-shape:              8px;
+  --mdc-outlined-text-field-outline-color:              var(--bdr2);
+  --mdc-outlined-text-field-focus-outline-color:        var(--cyan);
+  --mdc-outlined-text-field-label-text-color:           var(--t3);
+  --mdc-outlined-text-field-input-text-color:           var(--t1);
+  --mdc-outlined-text-field-container-shape:            8px;
   font-family: var(--font-body);
 }
 
 .mat-mdc-checkbox {
-  --mdc-checkbox-unselected-icon-color:        var(--bdr3);
-  --mdc-checkbox-selected-icon-color:          var(--cyan);
-  --mdc-checkbox-selected-checkmark-color:     var(--bg);
-  --mdc-checkbox-selected-focus-icon-color:    var(--cyan);
-  --mdc-checkbox-selected-hover-icon-color:    #33e4ff;
-  --mdc-checkbox-unselected-hover-icon-color:  var(--t3);
+  --mdc-checkbox-unselected-icon-color:       var(--bdr3);
+  --mdc-checkbox-selected-icon-color:         var(--cyan);
+  --mdc-checkbox-selected-checkmark-color:    #ffffff;
+  --mdc-checkbox-selected-focus-icon-color:   var(--cyan);
+  --mdc-checkbox-selected-hover-icon-color:   #6366F1;
+  --mdc-checkbox-unselected-hover-icon-color: var(--t3);
 }
 
 .mat-expansion-panel {
   background: var(--surf) !important;
   color: var(--t1) !important;
-  box-shadow: none !important;
+  box-shadow: var(--shadow-sm) !important;
   border: 1px solid var(--bdr) !important;
   border-radius: 10px !important;
 }
@@ -124,14 +167,14 @@ html, body {
 }
 
 .mat-mdc-raised-button.mat-primary {
-  --mdc-protected-button-container-color:   var(--cyan);
-  --mdc-protected-button-label-text-color:  var(--bg);
+  --mdc-protected-button-container-color:  var(--cyan);
+  --mdc-protected-button-label-text-color: #ffffff;
   font-family: var(--font-body);
   font-weight: 600;
 }
 .mat-mdc-outlined-button {
-  --mdc-outlined-button-outline-color:      var(--bdr2);
-  --mdc-outlined-button-label-text-color:   var(--t2);
+  --mdc-outlined-button-outline-color:   var(--bdr2);
+  --mdc-outlined-button-label-text-color: var(--t2);
   font-family: var(--font-body);
 }
 .mat-mdc-outlined-button:hover {
@@ -156,13 +199,9 @@ input, textarea {
   font-family: var(--font-body);
 }
 
-// ─── Mat icon sizing helper ───────────────────────────────────────────────────
-
 .mat-icon { user-select: none; }
 
-// ─── Selection ────────────────────────────────────────────────────────────────
-
 ::selection {
-  background: rgba(0, 217, 255, 0.18);
+  background: rgba(79, 70, 229, 0.15);
   color: var(--t1);
 }

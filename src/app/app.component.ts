@@ -11,9 +11,16 @@ import { NavComponent } from './nav/nav.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  isDark = false;
+
   constructor(public readonly router: Router) {}
 
   get showNav(): boolean {
     return !this.router.url.startsWith('/login');
+  }
+
+  toggleDark(): void {
+    this.isDark = !this.isDark;
+    document.body.classList.toggle('dark', this.isDark);
   }
 }

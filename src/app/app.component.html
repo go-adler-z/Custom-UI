@@ -1,6 +1,6 @@
 <div class="app-shell" [class.app-shell--no-nav]="!showNav">
   @if (showNav) {
-    <app-nav></app-nav>
+    <app-nav [isDark]="isDark" (toggleTheme)="toggleDark()"></app-nav>
   }
   <div class="app-content">
     <router-outlet></router-outlet>

@@ -1,8 +1,18 @@
+// ── Host element ──────────────────────────────────────────────────────────────
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
 // ── Shell ─────────────────────────────────────────────────────────────────────
 .ide-shell {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   background: var(--bg);
   font-family: var(--font-body);
   overflow: hidden;
@@ -73,12 +83,13 @@
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
 .ide-sidebar {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
   width: 260px;
   background: var(--surf);
   border-right: 1px solid var(--bdr);
   flex-shrink: 0;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -123,7 +134,7 @@
   padding: 1px 6px;
   cursor: pointer;
   transition: all .12s;
-  &:hover { color: var(--rose); border-color: rgba(244,63,94,.3); }
+  &:hover { color: var(--rose); border-color: var(--rose-g); background: var(--rose-d); }
 }
 
 .ide-search {
@@ -162,7 +173,7 @@
 }
 
 .ide-tree {
-  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 6px 0 12px;
 
@@ -226,7 +237,7 @@
     &.on {
       background: var(--cyan);
       border-color: var(--cyan);
-      box-shadow: 0 0 8px rgba(0,217,255,.3);
+      color: #ffffff;
     }
   }
 
@@ -258,12 +269,91 @@
     font-size: .56rem;
     color: var(--violet);
     background: var(--violet-d);
-    border: 1px solid rgba(167,139,250,.15);
+    border: 1px solid var(--violet-g);
     border-radius: 3px;
     padding: 1px 5px;
     flex-shrink: 0;
     white-space: nowrap;
     margin-top: 2px;
+  }
+}
+
+.ift-info-btn {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--bdr2);
+  background: transparent;
+  color: var(--t4);
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  font-weight: 700;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .12s;
+  line-height: 1;
+  padding: 0;
+
+  &:hover { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-d); }
+  &--active { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-d); }
+}
+
+.ift-info-panel {
+  padding: 8px 14px 10px 31px;
+  border-bottom: 1px solid var(--bdr);
+  background: var(--surf2);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  &__desc {
+    font-size: .72rem;
+    color: var(--t3);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__label {
+    font-family: var(--font-mono);
+    font-size: .58rem;
+    color: var(--t4);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  &__tags, &__fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  &__field {
+    font-family: var(--font-mono);
+    font-size: .6rem;
+    color: var(--t3);
+    background: var(--surf3);
+    border: 1px solid var(--bdr2);
+    border-radius: 3px;
+    padding: 1px 5px;
+  }
+
+  &__ready {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: .65rem;
+    color: var(--emerald);
   }
 }
 
@@ -311,11 +401,11 @@
 .ide-empty__ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(0,217,255,.08);
+  border: 1px solid var(--bdr);
   pointer-events: none;
 
   &--1 { width: 280px; height: 280px; }
-  &--2 { width: 420px; height: 420px; border-color: rgba(167,139,250,.06); }
+  &--2 { width: 420px; height: 420px; border-color: var(--bdr); opacity: .6; }
 }
 
 .ide-empty__content {
@@ -332,11 +422,11 @@
 .ide-empty__icon {
   width: 56px; height: 56px;
   border-radius: 14px;
-  background: var(--surf2);
-  border: 1px solid var(--bdr2);
+  background: var(--cyan-d);
+  border: 1px solid var(--cyan-g);
   display: flex; align-items: center; justify-content: center;
   color: var(--cyan);
-  box-shadow: 0 0 32px rgba(0,217,255,.08);
+  box-shadow: var(--shadow-sm);
 }
 
 .ide-empty__heading {
@@ -373,7 +463,8 @@
   &__n {
     width: 22px; height: 22px;
     border-radius: 50%;
-    border: 1px solid rgba(0,217,255,.3);
+    border: 1px solid var(--cyan-g);
+    background: var(--cyan-d);
     display: flex; align-items: center; justify-content: center;
     font-size: .6rem; font-weight: 700;
     color: var(--cyan);
@@ -426,7 +517,7 @@
   font-weight: 700;
   padding: 1px 6px;
   background: var(--cyan-d);
-  border: 1px solid rgba(0,217,255,.2);
+  border: 1px solid var(--cyan-g);
   border-radius: 10px;
   color: var(--cyan);
 }
@@ -464,7 +555,7 @@
   font-weight: 600;
   padding: 2px 7px;
   background: var(--cyan-d);
-  border: 1px solid rgba(0,217,255,.2);
+  border: 1px solid var(--cyan-g);
   border-radius: 4px;
   color: var(--cyan);
 }
@@ -488,22 +579,22 @@
 
   &--done {
     color: var(--emerald);
-    border-color: rgba(52,211,153,.2);
+    border-color: var(--emerald);
     background: var(--emerald-d);
   }
 
   &--deploy {
-    background: linear-gradient(135deg, rgba(0,217,255,.12), rgba(167,139,250,.08));
-    border-color: rgba(0,217,255,.25);
+    background: var(--cyan-d);
+    border-color: var(--cyan);
     color: var(--cyan);
     font-weight: 600;
-    &:hover:not(:disabled) { border-color: rgba(0,217,255,.5); box-shadow: 0 0 12px rgba(0,217,255,.2); }
+    &:hover:not(:disabled) { background: var(--cyan); color: #ffffff; box-shadow: var(--shadow); }
     &:disabled { opacity: .5; cursor: not-allowed; }
   }
 
   &--deployed {
     background: var(--emerald-d);
-    border-color: rgba(52,211,153,.2);
+    border-color: var(--emerald);
     color: var(--emerald);
   }
 
@@ -545,7 +636,7 @@
   box-shadow: none !important;
   overflow: visible !important;
 
-  &.mat-expanded { border-color: rgba(0,217,255,.2) !important; }
+  &.mat-expanded { border-color: var(--cyan-g) !important; }
 
   .mat-expansion-panel-header {
     height: auto !important;
@@ -583,7 +674,7 @@
   padding: 2px 6px;
   border-radius: 4px;
 
-  &--ok     { background: var(--emerald-d); border: 1px solid rgba(52,211,153,.2); color: var(--emerald); }
+  &--ok     { background: var(--emerald-d); border: 1px solid var(--emerald); color: var(--emerald); }
   &--fields { background: var(--surf3); border: 1px solid var(--bdr2); color: var(--t3); }
 }
 
@@ -612,7 +703,7 @@
   font-size: .6rem;
   color: var(--violet);
   background: var(--violet-d);
-  border: 1px solid rgba(167,139,250,.15);
+  border: 1px solid var(--violet-g);
   border-radius: 4px;
   padding: 2px 6px;
 }
@@ -625,7 +716,7 @@
   font-size: .72rem;
   color: var(--emerald);
   background: var(--emerald-d);
-  border: 1px solid rgba(52,211,153,.2);
+  border: 1px solid var(--emerald);
   border-radius: 6px;
   padding: 7px 10px;
   svg { flex-shrink: 0; }
@@ -650,7 +741,7 @@
     font-size: .56rem;
     padding: 1px 5px;
     background: var(--cyan-d);
-    border: 1px solid rgba(0,217,255,.2);
+    border: 1px solid var(--cyan-g);
     border-radius: 3px;
     color: var(--cyan);
   }
@@ -690,7 +781,7 @@
   box-sizing: border-box;
   transition: border-color .15s;
 
-  &:focus { border-color: rgba(0,217,255,.4); box-shadow: 0 0 0 2px var(--cyan-d); }
+  &:focus { border-color: var(--cyan); box-shadow: 0 0 0 2px var(--cyan-d); }
   &::placeholder { color: var(--t4); }
   &--icon { padding-left: 30px; }
 
@@ -711,7 +802,7 @@
   cursor: pointer;
   transition: all .12s;
   align-self: flex-start;
-  &:hover { color: var(--rose); border-color: rgba(244,63,94,.3); background: var(--rose-d); }
+  &:hover { color: var(--rose); border-color: var(--rose-g); background: var(--rose-d); }
 }
 
 // ── Code output ───────────────────────────────────────────────────────────────
@@ -734,11 +825,13 @@
 
   // Syntax highlight classes
   ::ng-deep {
-    .ch-c { color: var(--t3); }
+    .ch-c { color: var(--t3); font-style: italic; }
     .ch-k { color: var(--violet); }
     .ch-s { color: var(--emerald); }
     .ch-n { color: var(--amber); }
     .ch-f { color: var(--cyan); }
+    .ch-b { color: var(--cyan); opacity: .85; }
+    .ch-p { color: var(--t2); }
     .ch-i { color: var(--t1); }
     .ch-o { color: var(--t3); }
     .ch-u { color: var(--t2); }

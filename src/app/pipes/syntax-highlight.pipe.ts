@@ -194,15 +194,15 @@ export class SyntaxHighlightPipe implements PipeTransform {
   private render(t: Token): string {
     const v = this.esc(t.value);
     switch (t.type) {
-      case 'comment':  return `<span class="sh-c">${v}</span>`;
-      case 'string':   return `<span class="sh-s">${v}</span>`;
-      case 'keyword':  return `<span class="sh-k">${v}</span>`;
-      case 'builtin':  return `<span class="sh-b">${v}</span>`;
-      case 'number':   return `<span class="sh-n">${v}</span>`;
-      case 'function': return `<span class="sh-f">${v}</span>`;
-      case 'property': return `<span class="sh-p">${v}</span>`;
-      case 'operator': return `<span class="sh-o">${v}</span>`;
-      case 'punct':    return `<span class="sh-u">${v}</span>`;
+      case 'comment':  return `<span class="ch-c">${v}</span>`;
+      case 'string':   return `<span class="ch-s">${v}</span>`;
+      case 'keyword':  return `<span class="ch-k">${v}</span>`;
+      case 'builtin':  return `<span class="ch-b">${v}</span>`;
+      case 'number':   return `<span class="ch-n">${v}</span>`;
+      case 'function': return `<span class="ch-f">${v}</span>`;
+      case 'property': return `<span class="ch-p">${v}</span>`;
+      case 'operator': return `<span class="ch-o">${v}</span>`;
+      case 'punct':    return `<span class="ch-u">${v}</span>`;
       default:         return v;
     }
   }
