@@ -1,144 +1,148 @@
 <div class="home" [class.home--authed]="isAuthed">
 
-  <!-- ── HERO TERMINAL ───────────────────────────────────────────────────── -->
-  <section class="hero-terminal">
-    <div class="ht-grid-bg" aria-hidden="true"></div>
-    <div class="ht-orb ht-orb--1" aria-hidden="true"></div>
-    <div class="ht-orb ht-orb--2" aria-hidden="true"></div>
+  <!-- ── UNAUTHENTICATED LANDING ────────────────────────────────────────── -->
+  @if (!isAuthed) {
+    <div class="landing">
+      <div class="landing__bg" aria-hidden="true"></div>
 
-    <div class="ht-inner">
-      <div class="ht-window">
-        <div class="ht-titlebar">
-          <div class="ht-dots"><span></span><span></span><span></span></div>
-          <span class="ht-titlebar__name">xtra-ui-builder — bash</span>
-          <span class="ht-live-badge"><span class="ht-live-badge__dot"></span>LIVE</span>
-        </div>
-
-        <div class="ht-body">
-          <div class="ht-line ht-line--1">
-            <span class="ht-user">xtra</span><span class="ht-at">&#64;</span><span class="ht-host">builder</span><span class="ht-colon">:</span><span class="ht-path">~</span><span class="ht-dollar"> $ </span><span class="ht-cmd">xtra <span class="ht-kw">init</span> <span class="ht-arg">--features</span>=<span class="ht-val">48</span> <span class="ht-arg">--deploy</span></span>
-          </div>
-          <div class="ht-line ht-line--2"><span class="ht-dim">Resolving workspace configuration…</span></div>
-          <div class="ht-line ht-line--3"><span class="ht-ok">✓</span><span class="ht-dim"> 48 SDK features registered</span></div>
-          <div class="ht-line ht-line--4"><span class="ht-ok">✓</span><span class="ht-dim"> 12 page types indexed</span></div>
-          <div class="ht-line ht-line--5"><span class="ht-ok">✓</span><span class="ht-dim"> 32 production patterns loaded</span></div>
-          <div class="ht-line ht-line--6"><span class="ht-info">→</span><span class="ht-dim"> Builder ready.</span><span class="ht-highlight"> Select → Configure → Deploy.</span></div>
-          <div class="ht-line ht-line--7">
-            <span class="ht-user">xtra</span><span class="ht-at">&#64;</span><span class="ht-host">builder</span><span class="ht-colon">:</span><span class="ht-path">~</span><span class="ht-dollar"> $ </span><span class="ht-cursor">▋</span>
-          </div>
-        </div>
-
-        <div class="ht-actions">
-          <a class="ht-btn ht-btn--primary" routerLink="/builder">
+      <div class="landing__center">
+        <p class="landing__eyebrow">ZuperPro SDK · Custom UI Builder</p>
+        <h1 class="landing__h1">Build custom<br><span class="landing__accent">SDK extensions.</span></h1>
+        <p class="landing__sub">Select from 48 pre-built features, configure webhooks,<br>and download production-ready code — in minutes.</p>
+        <div class="landing__ctas">
+          <a class="lbtn lbtn--primary" routerLink="/builder">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             Open Builder
           </a>
-          <a class="ht-btn ht-btn--ghost" routerLink="/features">
+          <a class="lbtn lbtn--ghost" routerLink="/features">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
             Browse Features
           </a>
         </div>
       </div>
+
+      <div class="landing__bottom">
+        <div class="landing__stats">
+          @for (s of stats; track s.label) {
+            <div class="lstat">
+              <span class="lstat__val">{{ s.value }}</span>
+              <span class="lstat__lbl">{{ s.label }}</span>
+            </div>
+          }
+        </div>
+        <div class="landing__divider" aria-hidden="true"></div>
+        <div class="landing__steps">
+          @for (step of steps; track step.n; let last = $last) {
+            <div class="lstep">
+              <span class="lstep__n">{{ step.n }}</span>
+              <span class="lstep__title">{{ step.title }}</span>
+            </div>
+            @if (!last) {
+              <svg class="lstep__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            }
+          }
+        </div>
+      </div>
     </div>
-  </section>
+  }
 
-  <!-- ── DASHBOARD ─────────────────────────────────────────────────────── -->
+  <!-- ── AUTHENTICATED DASHBOARD ────────────────────────────────────────── -->
   @if (isAuthed) {
-    <section class="dashboard">
-      <div class="dashboard__inner">
+    <div class="dashboard">
 
-        <!-- Sidebar: company + counters -->
-        <div class="dashboard__sidebar">
+      <!-- Sidebar -->
+      <aside class="dash-sidebar">
 
-          @if (companyLoading) {
-            <div class="bento bento--company">
-              <div class="bento-skel">
-                <div class="bento-skel__avatar"></div>
-                <div class="bento-skel__lines">
-                  <div class="bento-skel__line bento-skel__line--w"></div>
-                  <div class="bento-skel__line bento-skel__line--m"></div>
+        @if (companyLoading) {
+          <div class="bento bento--company">
+            <div class="bento-skel">
+              <div class="bento-skel__avatar"></div>
+              <div class="bento-skel__lines">
+                <div class="bento-skel__line bento-skel__line--w"></div>
+                <div class="bento-skel__line bento-skel__line--m"></div>
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (!companyLoading && company) {
+          <div class="bento bento--company">
+            <div class="bento-company">
+              <div class="bento-company__avatar">
+                @if (company.company_logo) {
+                  <img [src]="company.company_logo" [alt]="company.company_name" />
+                } @else {
+                  <span>{{ company.company_name[0] }}</span>
+                }
+              </div>
+              <div class="bento-company__text">
+                <h2 class="bento-company__name">{{ company.company_name }}</h2>
+                <div class="bento-company__chips">
+                  <span class="bento-chip bento-chip--live">{{ company.company_status }}</span>
+                  <span class="bento-chip">{{ company.company_login_name }}</span>
                 </div>
               </div>
             </div>
-          }
-
-          @if (!companyLoading && company) {
-            <div class="bento bento--company">
-              <div class="bento-company">
-                <div class="bento-company__avatar">
-                  @if (company.company_logo) {
-                    <img [src]="company.company_logo" [alt]="company.company_name" />
-                  } @else {
-                    <span>{{ company.company_name[0] }}</span>
-                  }
-                </div>
-                <div class="bento-company__text">
-                  <h2 class="bento-company__name">{{ company.company_name }}</h2>
-                  <div class="bento-company__chips">
-                    <span class="bento-chip bento-chip--live">{{ company.company_status }}</span>
-                    <span class="bento-chip">{{ company.company_login_name }}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="bento-kv-grid">
-                <div class="bento-kv"><span class="bento-kv__k">Email</span><span class="bento-kv__v">{{ company.company_email }}</span></div>
-                <div class="bento-kv"><span class="bento-kv__k">Phone</span><span class="bento-kv__v">{{ company.company_phone }}</span></div>
-                <div class="bento-kv"><span class="bento-kv__k">Timezone</span><span class="bento-kv__v">{{ company.company_timezone }}</span></div>
-                <div class="bento-kv"><span class="bento-kv__k">Country</span><span class="bento-kv__v">{{ company.company_country }}</span></div>
-                <div class="bento-kv"><span class="bento-kv__k">Currency</span><span class="bento-kv__v">{{ company.company_currency }}</span></div>
-                <div class="bento-kv"><span class="bento-kv__k">Since</span><span class="bento-kv__v">{{ memberSince }}</span></div>
-              </div>
-              <a class="bento-company__cta" routerLink="/builder">Open Builder →</a>
+            <div class="bento-kv-grid">
+              <div class="bento-kv"><span class="bento-kv__k">Email</span><span class="bento-kv__v">{{ company.company_email }}</span></div>
+              <div class="bento-kv"><span class="bento-kv__k">Phone</span><span class="bento-kv__v">{{ company.company_phone }}</span></div>
+              <div class="bento-kv"><span class="bento-kv__k">Timezone</span><span class="bento-kv__v">{{ company.company_timezone }}</span></div>
+              <div class="bento-kv"><span class="bento-kv__k">Country</span><span class="bento-kv__v">{{ company.company_country }}</span></div>
+              <div class="bento-kv"><span class="bento-kv__k">Currency</span><span class="bento-kv__v">{{ company.company_currency }}</span></div>
+              <div class="bento-kv"><span class="bento-kv__k">Since</span><span class="bento-kv__v">{{ memberSince }}</span></div>
             </div>
-          }
+            <a class="bento-company__cta" routerLink="/builder">Open Builder →</a>
+          </div>
+        }
 
-          @if (!companyLoading && companyError) {
-            <div class="bento bento--err">{{ companyError }}</div>
-          }
+        @if (!companyLoading && companyError) {
+          <div class="bento bento--err">{{ companyError }}</div>
+        }
 
-          <div class="bento-stats-row">
-            <div class="bento bento--stat">
-              <span class="bento-stat__lbl">Deployments</span>
-              <span class="bento-stat__num">{{ customCodes.length }}</span>
-            </div>
-            <div class="bento bento--stat bento--stat-active">
-              <span class="bento-stat__lbl">Active</span>
-              <span class="bento-stat__num">{{ activeCount }}</span>
-            </div>
+        <div class="bento-stats-row">
+          <div class="bento bento--stat">
+            <span class="bento-stat__lbl">Deployments</span>
+            <span class="bento-stat__num">{{ customCodes.length }}</span>
+          </div>
+          <div class="bento bento--stat bento--stat-active">
+            <span class="bento-stat__lbl">Active</span>
+            <span class="bento-stat__num">{{ activeCount }}</span>
           </div>
         </div>
+      </aside>
 
-        <!-- Main: deployments -->
-        <div class="bento bento--deployments">
-          <div class="bento-dep__header">
-            <span class="bento-dep__title">Custom Code Deployments</span>
-            <button class="bento-new-btn" [class.bento-new-btn--open]="showNewForm" (click)="toggleNewForm()">
-              @if (showNewForm) {
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancel
-              } @else {
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New
-              }
+      <!-- Main deployments panel -->
+      <div class="bento bento--deployments">
+        <div class="bento-dep__header">
+          <span class="bento-dep__title">Custom Code Deployments</span>
+          <button class="bento-new-btn" [class.bento-new-btn--open]="showNewForm" (click)="toggleNewForm()">
+            @if (showNewForm) {
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancel
+            } @else {
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New
+            }
+          </button>
+        </div>
+
+        @if (showNewForm) {
+          <div class="bento-form">
+            <div class="bento-form__types">
+              <button class="bento-type-btn" [class.active]="newCodeType === 'JS'" (click)="newCodeType = 'JS'">JS</button>
+              <button class="bento-type-btn" [class.active]="newCodeType === 'CSS'" (click)="newCodeType = 'CSS'">CSS</button>
+            </div>
+            <textarea class="bento-form__editor" [(ngModel)]="newCodeValue" [placeholder]="'Paste your ' + (newCodeType === 'JS' ? 'JavaScript' : 'CSS') + ' code…'" rows="6" spellcheck="false"></textarea>
+            @if (deployError) {
+              <div class="bento-form__error">{{ deployError }}</div>
+            }
+            <button class="bento-form__submit" [class.success]="deploySuccess" [disabled]="deploying || !newCodeValue.trim()" (click)="deployCode()">
+              @if (deploying) { <span class="bento-form__spinner"></span>Deploying… }
+              @else if (deploySuccess) { ✓ Deployed! }
+              @else { Deploy }
             </button>
           </div>
+        }
 
-          @if (showNewForm) {
-            <div class="bento-form">
-              <div class="bento-form__types">
-                <button class="bento-type-btn" [class.active]="newCodeType === 'JS'" (click)="newCodeType = 'JS'">JS</button>
-                <button class="bento-type-btn" [class.active]="newCodeType === 'CSS'" (click)="newCodeType = 'CSS'">CSS</button>
-              </div>
-              <textarea class="bento-form__editor" [(ngModel)]="newCodeValue" [placeholder]="'Paste your ' + (newCodeType === 'JS' ? 'JavaScript' : 'CSS') + ' code…'" rows="6" spellcheck="false"></textarea>
-              @if (deployError) {
-                <div class="bento-form__error">{{ deployError }}</div>
-              }
-              <button class="bento-form__submit" [class.success]="deploySuccess" [disabled]="deploying || !newCodeValue.trim()" (click)="deployCode()">
-                @if (deploying) { <span class="bento-form__spinner"></span>Deploying… }
-                @else if (deploySuccess) { ✓ Deployed! }
-                @else { Deploy }
-              </button>
-            </div>
-          }
-
+        <div class="bento-dep__list">
           @if (customCodesLoading) {
             <div class="bento-skel-list">
               @for (_ of [1,2,3]; track $index) {
@@ -194,115 +198,33 @@
           @if (!customCodesLoading && customCodesError) {
             <div class="bento-err-msg">{{ customCodesError }}</div>
           }
+        </div>
 
-          @if (selectedCode) {
-            <div class="bento-detail">
-              <div class="bento-detail__header">
-                <span class="bcc__badge bcc__badge--type" [class.bcc__badge--js]="selectedCode.custom_code_type === 'JS'">{{ selectedCode.custom_code_type }}</span>
-                <span class="bento-detail__uid">{{ selectedCode.custom_code_uid }}</span>
-                <div class="bento-detail__btns">
-                  @if (!codeDetailLoading && codeDetail) {
-                    <button class="bento-detail__btn" (click)="copyDetailCode(); $event.stopPropagation()">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    </button>
-                  }
-                  <button class="bento-detail__btn bento-detail__btn--close" (click)="closeDetail()">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        @if (selectedCode) {
+          <div class="bento-detail">
+            <div class="bento-detail__header">
+              <span class="bcc__badge bcc__badge--type" [class.bcc__badge--js]="selectedCode.custom_code_type === 'JS'">{{ selectedCode.custom_code_type }}</span>
+              <span class="bento-detail__uid">{{ selectedCode.custom_code_uid }}</span>
+              <div class="bento-detail__btns">
+                @if (!codeDetailLoading && codeDetail) {
+                  <button class="bento-detail__btn" (click)="copyDetailCode(); $event.stopPropagation()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                   </button>
-                </div>
+                }
+                <button class="bento-detail__btn bento-detail__btn--close" (click)="closeDetail()">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
               </div>
-              @if (codeDetailLoading) { <div class="bento-detail__loading"><span class="bento-form__spinner"></span>Fetching…</div> }
-              @if (!codeDetailLoading && codeDetailError) { <div class="bento-err-msg">{{ codeDetailError }}</div> }
-              @if (!codeDetailLoading && codeDetail) { <pre class="bento-detail__code">{{ codeDetail.custom_code }}</pre> }
             </div>
-          }
-        </div>
-
-      </div>
-    </section>
-  }
-
-  <!-- ── STATS (giant typography) ──────────────────────────────────────── -->
-  <section class="numbers-section">
-    <p class="section-eyebrow">By the numbers</p>
-    <div class="numbers-grid">
-      @for (s of stats; track s.label; let i = $index) {
-        <div class="num-item" [style.--ni]="i">
-          <div class="num-item__val">{{ s.value }}</div>
-          <div class="num-item__lbl">{{ s.label }}</div>
-        </div>
-      }
-    </div>
-  </section>
-
-  <!-- ── FEATURES MARQUEE ───────────────────────────────────────────────── -->
-  <section class="marquee-section">
-    <p class="section-eyebrow">What's included</p>
-    <h2 class="marquee-section__h2">Everything you need to ship faster.</h2>
-    <div class="marquee-wrap">
-      <div class="marquee-fade marquee-fade--left" aria-hidden="true"></div>
-      <div class="marquee-fade marquee-fade--right" aria-hidden="true"></div>
-      <div class="marquee-track">
-        <div class="marquee-inner">
-          @for (f of features; track f.title) {
-            <div class="mq-card">
-              <div class="mq-card__icon"><mat-icon>{{ f.icon }}</mat-icon></div>
-              <h3 class="mq-card__title">{{ f.title }}</h3>
-              <p class="mq-card__desc">{{ f.desc }}</p>
-            </div>
-          }
-          @for (f of features; track f.title) {
-            <div class="mq-card" aria-hidden="true">
-              <div class="mq-card__icon"><mat-icon>{{ f.icon }}</mat-icon></div>
-              <h3 class="mq-card__title">{{ f.title }}</h3>
-              <p class="mq-card__desc">{{ f.desc }}</p>
-            </div>
-          }
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── HOW IT WORKS (connected flow) ─────────────────────────────────── -->
-  <section class="flow-section">
-    <p class="section-eyebrow">Process</p>
-    <h2 class="flow-section__h2">Zero to deployed in 4 steps.</h2>
-    <div class="flow-diagram">
-      @for (step of steps; track step.n; let last = $last, i = $index) {
-        <div class="flow-node" [style.--fi]="i">
-          <div class="flow-node__badge">{{ step.n }}</div>
-          <h3 class="flow-node__title">{{ step.title }}</h3>
-          <p class="flow-node__desc">{{ step.desc }}</p>
-        </div>
-        @if (!last) {
-          <div class="flow-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            @if (codeDetailLoading) { <div class="bento-detail__loading"><span class="bento-form__spinner"></span>Fetching…</div> }
+            @if (!codeDetailLoading && codeDetailError) { <div class="bento-err-msg">{{ codeDetailError }}</div> }
+            @if (!codeDetailLoading && codeDetail) { <pre class="bento-detail__code">{{ codeDetail.custom_code }}</pre> }
           </div>
         }
-      }
-    </div>
-  </section>
+      </div>
 
-  <!-- ── LAUNCH BANNER ─────────────────────────────────────────────────── -->
-  <section class="launch-banner">
-    <div class="launch-banner__glow" aria-hidden="true"></div>
-    <p class="section-eyebrow">Ready?</p>
-    <h2 class="launch-banner__h2">Ship your extension today.</h2>
-    <p class="launch-banner__sub">Select features · Configure once · Download forever.</p>
-    <a class="ht-btn ht-btn--primary ht-btn--lg" routerLink="/builder">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-      Open Builder
-    </a>
-  </section>
-
-  <!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
-  <footer class="footer">
-    <div class="footer__brand">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-      ZuperPro UI Builder
     </div>
-    <span class="footer__copy">Built for ZuperPro SDK developers</span>
-  </footer>
+  }
 
   <!-- ── CONFIRM DIALOG ─────────────────────────────────────────────────── -->
   @if (confirmDialog.visible) {

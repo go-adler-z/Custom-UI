@@ -20,6 +20,7 @@ export class LoginComponent {
   company = '';
   email = '';
   password = '';
+  showPassword = false;
   region = '';
   regionLoading = false;
   regionError = '';

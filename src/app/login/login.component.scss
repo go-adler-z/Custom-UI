@@ -98,6 +98,33 @@
     border-color: var(--cyan);
     box-shadow: 0 0 0 3px var(--cyan-d);
   }
+
+  &--padded { padding-right: 42px; }
+}
+
+.auth-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-eye {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 44px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--t4);
+  cursor: pointer;
+  transition: color .15s;
+  border-radius: 0 8px 8px 0;
+
+  &:hover { color: var(--t2); }
 }
 
 // ── Feedback ──────────────────────────────────────────────────────────────────
